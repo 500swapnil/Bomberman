@@ -36,7 +36,7 @@ def user_input(timeout=0.1):
 
 # Displays the Game Menu and lets user select level
 def gameMenu():
-    os.system("mpg123 --loop 9999 01-title-screen.mp3 &")
+    os.system("mpg123 --loop 9999 01-title-screen.mp3 2>/dev/null &")
     os.system("clear")
     print("Welcome to Bomberman!!")
     print("\nThe objective of the game is to destroy ",
@@ -59,7 +59,7 @@ def gameMenu():
     while c not in ["1", "2", "3", "4", "q"]:
         c = user_input()
     level = c
-    os.system("pkill mpg123")
+    os.system("pkill mpg123 2>/dev/null")
     return level
 
 
@@ -72,7 +72,7 @@ def pause():
 
 # Controls the main running and configuration of the game
 def gameLoop(lev):
-    os.system("mpg123 --loop 9999 theme.mp3 &")
+    os.system("mpg123 --loop 9999 theme.mp3 2>/dev/null &")
     level = int(lev)
     score = 0
 
@@ -185,7 +185,7 @@ def gameLoop(lev):
                 if bomb.health == 0:
                     bombLocations = [bomb.location]
                     bomb.explode(bombLocations, board)
-                    os.system("aplay shot.wav &")
+                    os.system("aplay shot.wav 2>/dev/null &")
                     for loc in bombLocations:
                         board[loc[0]][loc[1]] = 2
                 score += level * game.checkEnemy(board, enemies)
@@ -205,7 +205,7 @@ def gameLoop(lev):
                 os.system("clear")
                 print("Game Over! You win!!")
                 print("Your score is ", score)
-                os.system("pkill mpg123")
+                os.system("pkill mpg123 2>/dev/null")
                 sys.exit()
             if flag:
                 display.printBoard(board, blocks, score,
@@ -216,7 +216,7 @@ def gameLoop(lev):
     os.system("clear")
     print("Game Over!")
     print("Your score is ", score)
-    os.system("pkill mpg123")
+    os.system("pkill mpg123 2>/dev/null")
 
 level = gameMenu()
 
